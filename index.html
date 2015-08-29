@@ -71,10 +71,14 @@ boutonStop.onclick = function() {
 	last.className = '';
 
 	window.audioVideoRecorder.stopRecording(function(url) {
+		download(url)
 		last.src = url;
 		last.muted = false;
 		last.controls = true;
-		download(url)
+		// dirty workaround for: "firefox seems unable to playback"
+		last.onended = function() {
+			last.src = url;
+		};
 	});
 };
 
